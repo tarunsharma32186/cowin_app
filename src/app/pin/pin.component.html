@@ -1,0 +1,86 @@
+<!-- Form input for search by Pincode -->
+<br>
+        <div class="form-position">
+        <div class="container">
+            <form >
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label for="pin">Pin</label>
+                    <input type="number" class="form-control" required name="pin"  (keyup)="findByPincode($event)">
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label for="ageGroup">Age Group</label>
+                    <select (change)="onAgeGroupSelected($event)" class="dropdown-primary form-control" id="ageGroup" name="ageGroup">
+                      <option value="" selected disabled>Select Age</option>
+                      <option *ngFor="let j of ageGroup" [value]="j">
+                        {{j}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label for="vaccine">Vaccine</label>
+                      <select (change)="onVaccineSelected($event)" class="dropdown-primary form-control" id="vaccine" name="vaccine">
+                        <option value="" selected disabled>Select Vaccine</option>
+                        <option *ngFor="let j of vaccine" [value]="j">
+                          {{j}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>      
+          </form>
+        </div>
+      </div>
+      
+ <!-- Result of Search by Pincoe -->
+<div *ngIf="showSearchedRecordsByPincode">
+        <div class="container">
+          <br>
+          <div class="ScrollStyle">
+            <table class="table table-striped table-hover table-bordered table-style" cellspacing="0">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Center Name</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Earliest Date</th>
+                  <th scope="col">Available Dose</th>
+                  <th scope="col">Time Slots</th>
+                  <th scope="col">Age</th>
+                  <th scope="col">Vaccine</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container
+                *ngFor="let session of mySessionArray2 ;"
+                >
+                <tr *ngIf="(session.vaccine == vaccineType && session.min_age_limit == ageLimit && session.available_capacity>0)">
+      
+                  <td>{{session.name}}</td>
+                  <td>{{session.address}} {{session.pincode}}</td>
+                  <td>{{session.date}}</td>
+                  <td>{{session.available_capacity}}</td>
+                  <td>{{session.slots}}</td>
+                  <td>{{session.min_age_limit}}</td>
+                  <td >
+                    <tr>{{session.vaccine}}</tr>
+                    <tr>Rs. {{session.fee}}</tr>
+                  </td>
+                </tr>
+              </ng-container>
+              </tbody>
+            </table>
+      
+          </div>
+      
+        </div>
+</div>
+      
+      
